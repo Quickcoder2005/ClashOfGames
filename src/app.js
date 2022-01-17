@@ -95,7 +95,7 @@ function Home(){
     return (
         <Box marginTop={10} marginLeft={5} marginRight={5}>
             <Typography variant="h5" align="center"> Rounds </Typography>
-            <Box marginTop={2}>
+            <Box marginTop={1}>
             	<RoundTable/>
         	</Box>
         </Box>
@@ -181,7 +181,7 @@ function Organisers(){
 
 function Footer(){
     return (
-        <Box width="100%" position="absolute" left="0px" bottom="0px">
+        <Box width="100%" position="fixed" left="0px" bottom="0px">
             <Typography style={{backgroundColor: theme.palette.primary.main}} variant="subtitle2" color="textSecondary" align="center"><Icon className="material-icons" fontSize="small"> copyright </Icon> 2022 Clash of Games. All Rights Reserved. </Typography>
         </Box>
     );
