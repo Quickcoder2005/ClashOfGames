@@ -139,7 +139,7 @@ function RoundTable(){
 
 function Info(){
     return (
-        <Box marginTop={10} marginLeft={5} marginRight={5}>
+        <Box marginLeft={5} marginTop={10} marginRight={5} marginBottom={2}>
             <Typography variant="h5"> General Information </Typography>
             <Box marginTop={2}>
                 <Typography style={{wordBreak: "break-word"}} variant="body1" paragraph>
