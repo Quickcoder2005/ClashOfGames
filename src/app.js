@@ -3,8 +3,8 @@ import "./lib/react-dom.js";
 import "./lib/material-ui.js";
 import "./lib/popify.js";
 
-const {useState} = React;
-const {AppBar, Box, Button, CssBaseline, createTheme, Drawer, Divider, Icon, IconButton, List, ListItem, Typography, Toolbar, ThemeProvider} = MaterialUI;
+const {useState, useRef} = React;
+const {AppBar, Box, Button, CssBaseline, createTheme, Drawer, Divider, Icon, IconButton, List, ListItem, Paper, Typography, Toolbar, ThemeProvider, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} = MaterialUI;
 
 const theme = createTheme({
     palette: {
@@ -16,7 +16,7 @@ const theme = createTheme({
         },
         text: {
         	primary: "#212121",
-        	secondary: "#9e9e9e"
+        	secondary: "#f9f9f9"
         }
     }
 });
@@ -60,35 +60,30 @@ function Menu(props){
 	return (
 		<Drawer open={props.drawerState} onClose={() => props.setDrawerState(false)} anchor="left">
 			<List>
-				<Box display="flex" alignItems="center" justifyContent="center">
-                	<ListItem>
-                    	<img src="../public/icon.png" width="175" height="150"/>
-                	</ListItem>
-                </Box>
+				<ListItem>
+					<Typography style={{color: theme.palette.secondary.main}} variant="h6"> Clash of Games </Typography>
+				</ListItem>
                 <Divider/>
 				<ListItem>
-					<Icon style={{color: "#fa609a"}} className="material-icons"> home </Icon>
+					<Icon style={{color: theme.palette.secondary.main}} className="material-icons"> home </Icon>
 					<Button onClick={() => props.setContainerState("home")}> Home </Button>
 				</ListItem>
-				<Divider/>
 				<ListItem>
-					<Icon style={{color: "#fa609a"}} className="material-icons"> info </Icon>
-					<Button onClick={() => props.setContainerState("info")}> General Info </Button>
+					<Icon style={{color: theme.palette.secondary.main}} className="material-icons"> info </Icon>
+					<Button onClick={() => props.setContainerState("info")}> General Information </Button>
+				</ListItem>
+				<ListItem>
+					<Icon style={{color: theme.palette.secondary.main}} className="material-icons"> quiz </Icon>
+					<Button onClick={() => props.setContainerState("rules")}> Rules & Regulations </Button>
+				</ListItem>
+				<ListItem>
+					<Icon style={{color: theme.palette.secondary.main}} className="material-icons"> groups </Icon>
+					<Button onClick={() => props.setContainerState("organisers")}> About the Organisers </Button>
 				</ListItem>
 				<Divider/>
-				<ListItem>
-					<Icon style={{color: "#fa609a"}} className="material-icons"> quiz </Icon>
-					<Button onClick={() => props.setContainerState("rules")}> Rules </Button>
-				</ListItem>
-				<Divider/>
-				<ListItem>
-					<Icon style={{color: "#fa609a"}} className="material-icons"> groups </Icon>
-					<Button onClick={() => props.setContainerState("organisers")}> Organisers </Button>
-				</ListItem>
-				<Divider/>
-                <Box position="absolute" left={120}>
+                <Box position="absolute" left={160}>
                     <ListItem>
-                        <IconButton style={{color: "#fa609a"}} className="material-icons" size="large" onClick={() => props.setDrawerState(false)}> arrow_circle_left </IconButton>
+                        <IconButton style={{color: theme.palette.secondary.main}} className="material-icons" size="large" onClick={() => props.setDrawerState(false)}> arrow_circle_left </IconButton>
                     </ListItem>
                 </Box>
 			</List>
@@ -99,24 +94,60 @@ function Menu(props){
 function Home(){
     return (
         <Box marginTop={10} marginLeft={5} marginRight={5}>
-            <Typography variant="h4" color="textPrimary" align="center"> Lorem Ipsum </Typography>
+            <Typography variant="h5" align="center"> Rounds </Typography>
             <Box marginTop={2}>
-                <Typography variant="h5" color="textPrimary" align="center" paragraph>
-                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut gravida felis. Curabitur in metus sed turpis finibus porta quis nec risus. Donec nec mattis dui. Fusce volutpat elit eu nibh rutrum, eu dictum nulla aliquet. Vestibulum tempus rutrum augue, nec maximus enim elementum ac. Vestibulum sed enim ut erat dignissim posuere eu id sapien. Phasellus tempor placerat sodales. Vivamus congue ligula et consequat lacinia. Donec vel magna tristique risus convallis semper quis maximus diam. Nullam faucibus luctus quam. Aliquam erat volutpat. Duis interdum at ante a blandit. Sed consequat vulputate ex, ut mattis lacus efficitur a.
-                </Typography>
-            </Box>
+            	<RoundTable/>
+        	</Box>
         </Box>
     );
+}
+
+function RoundTable(){
+	const rows = useRef([
+		createData("1", "Alien", 13241),
+		createData("2", "Animal", 34534),
+		createData("3", "Tiger", 12443)
+	]);
+
+	function createData(round, participants, scoring){
+	 	return {round, participants, scoring};
+	}
+
+	return (
+    	<TableContainer component={Paper}>
+     		<Table>
+	        	<TableHead>
+	          		<TableRow>
+	            		<TableCell> Round </TableCell>
+	            		<TableCell align="right"> Participants</TableCell>
+	            		<TableCell align="right"> Scoring </TableCell>
+	          		</TableRow>
+	        	</TableHead>
+		        <TableBody>
+		        	{rows.current.map((row) => (
+		            	<TableRow key={row.round}>
+		              		<TableCell component="th" scope="row"> {row.round} </TableCell>
+		              		<TableCell align="right"> {row.participants} </TableCell>
+		              		<TableCell align="right"> {row.scoring} </TableCell>
+		            	</TableRow>
+		          	))}
+		        </TableBody>
+      		</Table>
+    	</TableContainer>
+  	);
 }
 
 function Info(){
     return (
         <Box marginTop={10} marginLeft={5} marginRight={5}>
-            <Typography variant="h4" color="textPrimary" align="center"> Lorem Ipsum </Typography>
+            <Typography variant="h5"> General Information </Typography>
             <Box marginTop={2}>
-                <Typography variant="h5" color="textPrimary" align="center" paragraph>
-                     Sed in pulvinar risus, vel finibus purus. Vivamus mollis neque sit amet nunc commodo, consequat consectetur ante dictum. Nam interdum ut felis vel interdum. Morbi scelerisque auctor eros eget mollis. Etiam ac felis vel risus tincidunt tristique. Ut ante lacus, malesuada eu faucibus vitae, sagittis vel neque. Nulla facilisi. Quisque aliquet turpis arcu, in congue arcu suscipit ut. Nullam in orci sed dui tincidunt viverra. Ut efficitur, sem et auctor pretium, diam leo placerat felis, id rhoncus velit nisl ut diam. Pellentesque a commodo dolor. Sed mi dolor, aliquet ac ante ut, hendrerit condimentum ex. Phasellus at mi sed mauris dictum sodales sit amet et libero. Nullam molestie faucibus arcu id pharetra. Morbi malesuada pulvinar tellus, non suscipit arcu convallis consectetur.
-                </Typography>
+                <Typography style={{wordBreak: "break-word"}} variant="body1" paragraph>
+                	There will be 5 rounds. In the first round all except 8 best submits are eliminated. Each following round half of participants is eliminated. Participants eliminated in the second last round continue playing for the third place. 
+               	</Typography>
+               	<Typography style={{wordBreak: "break-word"}} variant="body1" paragraph>
+                	Each round lasts exactly 1 week starting on Monday. Organizers vote for round theme which is announced Monday 8:00. Since then participants can submit in form of Sololearn codes till Friday 24:00. Submits after deadline or in different forms are invalid. Results are announced Sunday 12:00.
+				</Typography>
             </Box>
         </Box>
     );
@@ -125,11 +156,11 @@ function Info(){
 function Rules(){
     return (
         <Box marginTop={10} marginLeft={5} marginRight={5}>
-            <Typography variant="h4" color="textPrimary" align="center"> Lorem Ipsum </Typography>
+            <Typography variant="h5"> Rules & Regulations </Typography>
             <Box marginTop={2}>
-                <Typography variant="h5" color="textPrimary" align="center" paragraph>
-                     Proin in risus ipsum. Proin in euismod justo. Mauris tristique arcu sit amet nisl sollicitudin, ullamcorper scelerisque arcu vestibulum. Nulla non dui nec risus porttitor egestas. Praesent facilisis tristique dignissim. Vivamus varius dolor eu dolor euismod ullamcorper. Ut id eros id mi rutrum egestas. Ut condimentum sem ac elit ornare, nec volutpat eros dignissim. Morbi eu pulvinar est. Pellentesque ultricies, ante in tempus pulvinar, sapien lectus egestas elit, et auctor ligula justo sed justo. Ut felis sapien, imperdiet at augue nec, faucibus dictum ex. Sed porttitor dolor commodo turpis eleifend, ultrices eleifend risus fermentum.
-                </Typography>
+                <Typography style={{wordBreak: "break-word"}} variant="body1" paragraph>
+                	Rules to be followed: 
+               	</Typography>
             </Box>
         </Box>
     );
@@ -138,11 +169,11 @@ function Rules(){
 function Organisers(){
     return (
         <Box marginTop={10} marginLeft={5} marginRight={5}>
-            <Typography variant="h4" color="textPrimary" align="center"> Lorem Ipsum </Typography>
+            <Typography variant="h5"> About the Organisers </Typography>
             <Box marginTop={2}>
-                <Typography variant="h5" color="textPrimary" align="center" paragraph>
-                     Mauris dignissim risus porta, convallis diam a, pharetra neque. Etiam interdum iaculis purus, tristique commodo odio. Proin sit amet volutpat ante. Suspendisse pharetra, est non ornare feugiat, ex tortor mattis quam, eget tincidunt arcu nisl in elit. Nunc ac diam neque. Phasellus tempus, neque et dapibus pharetra, ligula eros rutrum sem, imperdiet convallis nulla libero sit amet arcu. Vivamus volutpat est sapien, at aliquam ipsum porttitor suscipit. Morbi congue ante metus, in semper metus efficitur sit amet. Pellentesque malesuada, est id tristique iaculis, tellus enim maximus sem, sed euismod libero augue ut erat. Ut sed nunc sit amet elit commodo pellentesque. Morbi volutpat velit nec dui ultricies accumsan dictum a dui. Suspendisse potenti. Duis non posuere massa. Sed malesuada finibus metus, vel iaculis est auctor nec. Ut et enim arcu. Nullam mi lectus, ullamcorper non dolor tincidunt, pharetra interdum est.
-                </Typography>
+                <Typography style={{wordBreak: "break-word"}} variant="body1" paragraph>
+                	About the organisers...
+               	</Typography>
             </Box>
         </Box>
     );
@@ -150,8 +181,8 @@ function Organisers(){
 
 function Footer(){
     return (
-        <Box marginTop={1} marginBottom={1} marginLeft={1} marginRight={1}>
-            <Typography style={{fontSize: "18px"}} variant="h6" color="textSecondary" align="center"><Icon className="material-icons"> copyright </Icon> 2022 Clash of Games. All Rights Reserved. </Typography>
+        <Box width="100%" position="absolute" left="0px" bottom="0px">
+            <Typography style={{backgroundColor: theme.palette.primary.main}} variant="subtitle2" color="textSecondary" align="center"><Icon className="material-icons" fontSize="small"> copyright </Icon> 2022 Clash of Games. All Rights Reserved. </Typography>
         </Box>
     );
 }
